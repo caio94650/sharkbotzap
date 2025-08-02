@@ -1,127 +1,5 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Painel - SharkBotzap</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="icon" href="https://i.ibb.co/3ydtSJNq/logo.png" type="image/png">
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #2563eb, #3b82f6);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      color: #111827;
-    }
+<%- include('partials/header') %>
 
-    .container {
-      background: #fff;
-      padding: 2rem;
-      border-radius: 16px;
-      width: 100%;
-      max-width: 600px;
-      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
-      animation: fadeIn 0.6s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .logo {
-      display: block;
-      margin: 0 auto 1rem;
-      height: 60px;
-    }
-
-    h2 {
-      text-align: center;
-      margin: 0 0 1rem;
-      font-weight: 600;
-    }
-
-    .info, .status, .card {
-      margin-bottom: 1rem;
-      border-radius: 12px;
-      padding: 1rem;
-    }
-
-    .info {
-      background: #f1f5f9;
-    }
-
-    .status.conectado {
-      background: #d1fae5;
-      color: #065f46;
-    }
-
-    .status.desconectado {
-      background: #fee2e2;
-      color: #991b1b;
-    }
-
-    .qr {
-      text-align: center;
-      margin: 1rem 0;
-    }
-
-    .qr img {
-      max-width: 100%;
-      border: 2px solid #e5e7eb;
-      border-radius: 10px;
-    }
-
-    .btn, .btn-red {
-      width: 100%;
-      display: block;
-      padding: 0.8rem;
-      font-size: 1rem;
-      font-weight: 600;
-      text-align: center;
-      margin-top: 0.5rem;
-      border-radius: 8px;
-      cursor: pointer;
-      border: none;
-      transition: background 0.3s ease;
-    }
-
-    .btn {
-      background-color: #2563eb;
-      color: white;
-    }
-
-    .btn:hover {
-      background-color: #1e40af;
-    }
-
-    .btn-red {
-      background-color: #ef4444;
-      color: white;
-    }
-
-    .btn-red:hover {
-      background-color: #b91c1c;
-    }
-
-    ul {
-      padding-left: 1.2rem;
-      text-align: left;
-    }
-
-    footer {
-      margin-top: 2rem;
-      text-align: center;
-      font-size: 0.85rem;
-      color: #e2e8f0;
-    }
-  </style>
-</head>
 <body>
   <div class="container">
     <img src="https://i.ibb.co/3ydtSJNq/logo.png" alt="Logo SharkBotzap" class="logo">
@@ -169,7 +47,7 @@
       </ul>
     </div>
 
-    <footer>&copy; <%= new Date().getFullYear() %> SharkBotzap. Todos os direitos reservados.</footer>
+    <%- include('partials/footer') %>
   </div>
 </body>
 </html>
