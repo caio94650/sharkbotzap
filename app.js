@@ -9,10 +9,10 @@ const app = express();
 
 // Configurações básicas
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public")); // Certifique-se de que a pasta se chama exatamente "public"
+app.use(express.static("public")); // Certifique-se que a pasta se chama "public"
 
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views")); // Certifique-se de que a pasta é "views"
+app.set("views", path.join(__dirname, "views")); // Certifique-se que a pasta é "views"
 
 app.use(
   session({
@@ -24,7 +24,7 @@ app.use(
 
 // Rotas
 app.use("/", authRoutes);
-app.use("/dashboard", dashboardRoutes); // Agora o painel responde a /dashboard
+app.use("/dashboard", dashboardRoutes); // Correto!
 
 // Inicialização do servidor
 const PORT = process.env.PORT || 3000;
