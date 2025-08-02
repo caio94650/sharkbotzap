@@ -3,112 +3,96 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cadastro - SharkBotzap</title>
+  <title>Dashboard - SharkBotzap</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
-      margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(120deg, #438cc8, #356ca4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      padding: 20px;
+      background: #f0f4f8;
+      margin: 0;
+      padding: 30px;
     }
 
-    .register-container {
-      background: #fff;
-      padding: 30px 25px;
-      border-radius: 12px;
-      width: 100%;
-      max-width: 400px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-      text-align: center;
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      border-radius: 10px;
+      padding: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
 
-    .register-container h2 {
-      margin-top: 0;
-      color: #356ca4;
+    h1 {
+      color: #438cc8;
     }
 
-    input[type="text"],
-    input[type="email"],
-    input[type="password"] {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 15px;
+    .qr-box {
+      background: #eef3f8;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 20px;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+
+    .status-box {
+      margin-top: 30px;
+      background: #dff0d8;
+      padding: 15px;
+      border-radius: 6px;
+      color: #3c763d;
     }
 
     button {
-      width: 100%;
-      padding: 12px;
+      margin-top: 20px;
+      padding: 10px 20px;
       background-color: #438cc8;
-      color: #fff;
+      color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
       font-size: 16px;
       cursor: pointer;
-      margin-top: 10px;
     }
 
     button:hover {
       background-color: #356ca4;
     }
 
-    .error-message {
-      color: red;
-      margin-top: 10px;
-    }
-
-    .success-message {
-      color: green;
-      margin-top: 10px;
-    }
-
-    a {
-      display: block;
-      margin-top: 15px;
-      color: #356ca4;
+    .logout {
+      display: inline-block;
+      margin-top: 20px;
+      background-color: #c0392b;
+      padding: 10px 20px;
+      color: white;
+      border-radius: 6px;
       text-decoration: none;
     }
 
-    a:hover {
-      text-decoration: underline;
-    }
-
-    @media screen and (max-width: 400px) {
-      .register-container {
-        padding: 20px 15px;
-      }
+    .logout:hover {
+      background-color: #a93226;
     }
   </style>
 </head>
 <body>
-  <div class="register-container">
-    <h2>Crie sua Conta</h2>
-    <form action="/register" method="POST">
-      <input type="text" name="name" placeholder="Seu nome" required />
-      <input type="email" name="email" placeholder="E-mail" required autocomplete="off" />
-      <input type="password" name="password" placeholder="Senha" required autocomplete="off" />
-      <button type="submit">Cadastrar</button>
+  <div class="container">
+    <h1>Bem-vindo, <%= user.name %>!</h1>
+    <p>Email: <%= user.email %></p>
+
+    <% if (qr) { %>
+      <div class="qr-box"><%= qr %></div>
+    <% } else { %>
+      <p>QR Code ainda não gerado.</p>
+    <% } %>
+
+    <div class="status-box">
+      <strong>Status:</strong> <%= status.status %><br>
+      <strong>Última Mensagem:</strong> <%= status.lastMessage %>
+    </div>
+
+    <form action="/dashboard/aquecedor" method="POST">
+      <button type="submit">Iniciar Aquecedor</button>
     </form>
 
-    <% if (error) { %>
-      <div class="error-message"><%= error %></div>
-    <% } %>
-
-    <% if (success) { %>
-      <div class="success-message"><%= success %></div>
-    <% } %>
-
-    <a href="/login">Já tem conta? Entrar</a>
+    <a class="logout" href="/logout">Sair</a>
   </div>
 </body>
 </html>
