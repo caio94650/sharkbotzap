@@ -2,145 +2,89 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <title>SharkBotzap - Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - SharkBotzap</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #438cc8;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      animation: fadeIn 0.8s ease-in;
+    * {
+      box-sizing: border-box;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(120deg, #438cc8, #356ca4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 20px;
     }
 
     .login-container {
       background: #fff;
-      padding: 40px;
+      padding: 30px 25px;
       border-radius: 12px;
       width: 100%;
-      max-width: 400px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      max-width: 380px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
       text-align: center;
-      animation: fadeIn 1s ease;
     }
 
-    .login-container img {
-      width: 120px;
-      margin-bottom: 15px;
+    .login-container h2 {
+      margin-top: 0;
+      color: #356ca4;
     }
 
-    h2 {
-      margin-bottom: 20px;
-      color: #222;
-    }
-
-    input {
+    input[type="email"],
+    input[type="password"] {
       width: 100%;
       padding: 12px;
-      margin-bottom: 15px;
+      margin: 10px 0;
       border: 1px solid #ccc;
       border-radius: 8px;
-      font-size: 16px;
-    }
-
-    .password-wrapper {
-      position: relative;
-    }
-
-    .password-wrapper input {
-      padding-right: 40px;
-    }
-
-    .toggle-password {
-      position: absolute;
-      top: 50%;
-      right: 12px;
-      transform: translateY(-50%);
-      cursor: pointer;
-      color: #666;
+      font-size: 15px;
     }
 
     button {
       width: 100%;
       padding: 12px;
-      background: #438cc8;
+      background-color: #438cc8;
+      color: #fff;
       border: none;
-      color: white;
-      font-weight: bold;
       border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
-      transition: 0.3s;
+      margin-top: 10px;
     }
 
     button:hover {
-      background: #356ca4;
+      background-color: #356ca4;
     }
 
-    .link {
-      display: block;
-      margin-top: 15px;
-      color: #555;
+    .error-message {
+      color: red;
+      margin-top: 10px;
     }
 
-    .error {
-      background: #f44336;
-      color: white;
-      padding: 10px;
-      border-radius: 6px;
-      margin-bottom: 15px;
-    }
-
-    .success {
-      background: #4caf50;
-      color: white;
-      padding: 10px;
-      border-radius: 6px;
-      margin-bottom: 15px;
+    @media screen and (max-width: 400px) {
+      .login-container {
+        padding: 20px 15px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="login-container">
-    <img src="/logo.png" alt="Logo SharkBotzap">
-    <h2>SharkBotzap</h2>
-
-    <% if (typeof error !== 'undefined' && error) { %>
-      <div class="error"><%= error %></div>
-    <% } %>
-
-    <% if (typeof success !== 'undefined' && success) { %>
-      <div class="success"><%= success %></div>
-    <% } %>
-
+    <h2>SharkBotzap - Login</h2>
     <form action="/login" method="POST">
-      <input type="email" name="email" id="email" placeholder="E-mail" required autofocus />
-      
-      <div class="password-wrapper">
-        <input type="password" name="password" id="password" placeholder="Senha" required />
-        <span class="toggle-password" onclick="togglePassword()">👁️</span>
-      </div>
-      
+      <input type="email" name="email" placeholder="E-mail" required />
+      <input type="password" name="password" placeholder="Senha" required />
       <button type="submit">Entrar</button>
     </form>
 
-    <a class="link" href="/register">Criar nova conta</a>
+    <% if (typeof error !== "undefined") { %>
+      <div class="error-message"><%= error %></div>
+    <% } %>
   </div>
-
-  <script>
-    function togglePassword() {
-      const pass = document.getElementById("password");
-      pass.type = pass.type === "password" ? "text" : "password";
-    }
-
-    document.getElementById("email").focus();
-  </script>
 </body>
 </html>
