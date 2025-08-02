@@ -1,110 +1,102 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard - SharkBotzap</title>
+  <title>Painel - SharkBotzap</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f0f4f8;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
       margin: 0;
-      padding: 30px;
+      padding: 0;
     }
-
-    .container {
-      max-width: 700px;
-      margin: auto;
-      background: white;
-      border-radius: 10px;
-      padding: 40px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    }
-
-    h1 {
-      color: #438cc8;
-    }
-
-    .qr-box {
-      background: #eef3f8;
+    header {
+      background: #1f6feb;
+      color: white;
       padding: 15px;
-      border-radius: 6px;
-      margin-top: 20px;
       text-align: center;
     }
-
-    .qr-box img {
-      max-width: 300px;
-      width: 100%;
+    main {
+      max-width: 600px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-top: 0;
+    }
+    .status {
       margin-top: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      font-weight: bold;
     }
-
-    .status-box {
-      margin-top: 30px;
-      background: #dff0d8;
-      padding: 15px;
-      border-radius: 6px;
-      color: #3c763d;
+    .status.conectado {
+      background-color: #d4edda;
+      color: #155724;
     }
-
-    button {
+    .status.desconectado {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+    .qr {
+      text-align: center;
       margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #438cc8;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
     }
-
-    button:hover {
-      background-color: #356ca4;
+    .qr img {
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
     }
-
-    .logout {
+    .btn {
       display: inline-block;
-      margin-top: 20px;
-      background-color: #c0392b;
-      padding: 10px 20px;
+      padding: 10px 15px;
+      background: #1f6feb;
       color: white;
-      border-radius: 6px;
       text-decoration: none;
+      border-radius: 5px;
+      margin-top: 15px;
     }
-
-    .logout:hover {
-      background-color: #a93226;
+    .btn:hover {
+      background: #0e4bb8;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Bem-vindo, <%= user.name %>!</h1>
-    <p>Email: <%= user.email %></p>
+  <header>
+    <h1>SharkBotzap</h1>
+  </header>
+  <main>
+    <h2>Bem-vindo, <%= user.name %></h2>
+    <p>Email: <strong><%= user.email %></strong></p>
 
-    <% if (qr) { %>
-      <div class="qr-box">
-        <p><strong>Escaneie o QR Code abaixo com o WhatsApp:</strong></p>
-        <img src="<%= qr %>" alt="QR Code WhatsApp" />
-      </div>
-    <% } else { %>
-      <p>QR Code ainda não gerado. <form style="display:inline;" method="POST" action="/dashboard/conectar"><button type="submit">Conectar WhatsApp</button></form></p>
-    <% } %>
-
-    <div class="status-box">
-      <strong>Status:</strong> <%= status.status %><br>
-      <strong>Última Mensagem:</strong> <%= status.lastMessage %>
+    <div class="status <%= status.status === 'conectado' ? 'conectado' : 'desconectado' %>">
+      Status: <%= status.status %>
     </div>
 
     <% if (qr) { %>
-    <form action="/dashboard/aquecedor" method="POST">
-      <button type="submit">Iniciar Aquecedor</button>
-    </form>
-    <% } else { %>
-    <p style="margin-top: 20px; color: #888;">Conecte-se ao WhatsApp para iniciar o aquecedor.</p>
+      <div class="qr">
+        <p>Escaneie o QR Code abaixo com o WhatsApp:</p>
+        <img src="<%= qr %>" alt="QR Code WhatsApp">
+      </div>
+    <% } else if (status.status !== 'conectado') { %>
+      <p>Nenhum QR Code disponível. Clique no botão abaixo para conectar.</p>
     <% } %>
 
-    <a class="logout" href="/logout">Sair</a>
-  </div>
+    <% if (status.status !== 'conectado') { %>
+      <form action="/dashboard/conectar" method="POST">
+        <button class="btn" type="submit">Conectar WhatsApp</button>
+      </form>
+    <% } else { %>
+      <p>✅ Dispositivo já está conectado ao WhatsApp.</p>
+    <% } %>
+
+    <form action="/dashboard/aquecedor" method="POST">
+      <button class="btn" type="submit">Iniciar Aquecedor</button>
+    </form>
+  </main>
 </body>
 </html>
