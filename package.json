@@ -16,6 +16,7 @@
     "express": "^5.1.0",
     "express-session": "^1.18.2",
     "fs-extra": "^11.3.0",
+    "qrcode": "^1.5.4",
     "sqlite3": "^5.1.7"
   }
 }
