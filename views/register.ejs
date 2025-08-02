@@ -1,120 +1,104 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cadastrar - SharkBotzap</title>
+  <title>Cadastro - SharkBotzap</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="icon" href="/logo.png" type="image/png">
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      background: #438cc8;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to right, #2563eb, #1d4ed8);
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      padding: 20px;
+      height: 100vh;
+      color: #333;
     }
 
-    .register-container {
-      background: white;
-      padding: 40px 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      text-align: center;
+    .container {
+      background-color: #fff;
+      padding: 2rem 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       width: 100%;
-      max-width: 350px;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .container img {
+      width: 60px;
+      margin-bottom: 1rem;
     }
 
     h2 {
-      margin-top: 0;
-      color: #438cc8;
+      margin-bottom: 1.5rem;
+      color: #111827;
     }
 
-    input {
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
       width: 100%;
       padding: 12px;
-      margin: 10px 0;
+      margin-bottom: 1rem;
       border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 15px;
+      border-radius: 8px;
+      font-size: 1rem;
     }
 
     button {
       width: 100%;
-      padding: 12px;
-      background-color: #438cc8;
+      background-color: #2563eb;
       color: white;
       border: none;
-      border-radius: 6px;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
       cursor: pointer;
-      font-weight: bold;
-      font-size: 15px;
+      transition: background 0.2s ease-in-out;
     }
 
     button:hover {
-      background-color: #356ca4;
+      background-color: #1e40af;
     }
 
-    .error-message {
-      color: red;
-      margin-top: 10px;
-      font-size: 14px;
+    .login-link {
+      margin-top: 1rem;
+      font-size: 0.95rem;
     }
 
-    .success-message {
-      color: green;
-      margin-top: 10px;
-      font-size: 14px;
-    }
-
-    a {
-      display: block;
-      margin-top: 15px;
-      color: #438cc8;
+    .login-link a {
+      color: #2563eb;
       text-decoration: none;
-      font-size: 14px;
+      font-weight: 600;
     }
 
-    a:hover {
+    .login-link a:hover {
       text-decoration: underline;
-    }
-
-    @media screen and (max-width: 400px) {
-      .register-container {
-        padding: 30px 20px;
-      }
-
-      h2 {
-        font-size: 20px;
-      }
-
-      input, button {
-        font-size: 14px;
-      }
     }
   </style>
 </head>
 <body>
-  <div class="register-container">
+  <div class="container">
+    <img src="/logo.png" alt="SharkBotzap Logo">
     <h2>Criar Conta</h2>
-
     <form action="/register" method="POST">
-      <input type="text" name="name" placeholder="Seu nome" required />
-      <input type="email" name="email" placeholder="E-mail" required autocomplete="off" />
-      <input type="password" name="password" placeholder="Senha" required autocomplete="off" />
+      <input type="text" name="name" placeholder="Seu nome completo" required />
+      <input type="email" name="email" placeholder="Seu e-mail" required />
+      <input type="password" name="password" placeholder="Crie uma senha" required />
       <button type="submit">Cadastrar</button>
     </form>
-
-    <% if (error) { %>
-      <div class="error-message"><%= error %></div>
-    <% } %>
-
-    <% if (success) { %>
-      <div class="success-message"><%= success %></div>
-    <% } %>
-
-    <a href="/login">Já tem conta? Entrar</a>
+    <div class="login-link">
+      Já tem uma conta? <a href="/login">Entrar</a>
+    </div>
   </div>
 </body>
 </html>
