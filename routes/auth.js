@@ -4,7 +4,7 @@ const path = require("path");
 const router = express.Router();
 
 // Caminho para o banco de dados (arquivo JSON)
-const usersFile = path.join(__dirname, "..", "users.json");
+const usersFile = path.join(__dirname, "..", "users.db");
 
 // Garante que o arquivo existe
 if (!fs.existsSync(usersFile)) {
