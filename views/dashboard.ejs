@@ -32,6 +32,7 @@
       margin-top: 20px;
       font-family: monospace;
       white-space: pre-wrap;
+      word-break: break-word;
     }
 
     .status-box {
@@ -80,7 +81,7 @@
     <% if (qr) { %>
       <div class="qr-box"><%= qr %></div>
     <% } else { %>
-      <p>QR Code ainda não gerado.</p>
+      <p>QR Code ainda não gerado ou sessão já conectada.</p>
     <% } %>
 
     <div class="status-box">
@@ -88,9 +89,13 @@
       <strong>Última Mensagem:</strong> <%= status.lastMessage %>
     </div>
 
-    <form action="/dashboard/aquecedor" method="POST">
-      <button type="submit">Iniciar Aquecedor</button>
-    </form>
+    <% if (status.status === 'conectado') { %>
+      <form action="/dashboard/aquecedor" method="POST">
+        <button type="submit">Iniciar Aquecedor</button>
+      </form>
+    <% } else { %>
+      <p style="color: #999; margin-top: 20px;">Conecte-se ao WhatsApp para iniciar o aquecedor.</p>
+    <% } %>
 
     <a class="logout" href="/logout">Sair</a>
   </div>
