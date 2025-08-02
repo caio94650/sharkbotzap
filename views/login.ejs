@@ -11,79 +11,83 @@
 
     body {
       margin: 0;
+      background: #438cc8;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(120deg, #438cc8, #356ca4);
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
       padding: 20px;
     }
 
     .login-container {
       background: #fff;
-      padding: 30px 25px;
+      padding: 40px;
       border-radius: 12px;
       width: 100%;
-      max-width: 380px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      max-width: 400px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #438cc8;
       text-align: center;
     }
 
-    .login-container h2 {
-      margin-top: 0;
-      color: #356ca4;
+    label {
+      display: block;
+      margin: 20px 0 8px;
+      color: #333;
     }
 
-    input[type="email"],
-    input[type="password"] {
+    input {
       width: 100%;
       padding: 12px;
-      margin: 10px 0;
       border: 1px solid #ccc;
       border-radius: 8px;
-      font-size: 15px;
+      font-size: 16px;
     }
 
     button {
       width: 100%;
       padding: 12px;
+      margin-top: 30px;
       background-color: #438cc8;
-      color: #fff;
+      color: white;
       border: none;
       border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
-      margin-top: 10px;
     }
 
     button:hover {
       background-color: #356ca4;
     }
 
-    .error-message {
+    .error {
       color: red;
-      margin-top: 10px;
-    }
-
-    @media screen and (max-width: 400px) {
-      .login-container {
-        padding: 20px 15px;
-      }
+      margin-top: 15px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
   <div class="login-container">
-    <h2>SharkBotzap - Login</h2>
+    <h2>Entrar no SharkBotzap</h2>
+
     <form action="/login" method="POST">
-      <input type="email" name="email" placeholder="E-mail" required />
-      <input type="password" name="password" placeholder="Senha" required />
+      <label for="email">E-mail</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="password">Senha</label>
+      <input type="password" id="password" name="password" required />
+
       <button type="submit">Entrar</button>
     </form>
 
-    <% if (typeof error !== "undefined") { %>
-      <div class="error-message"><%= error %></div>
+    <% if (error) { %>
+      <div class="error"><%= error %></div>
     <% } %>
   </div>
 </body>
