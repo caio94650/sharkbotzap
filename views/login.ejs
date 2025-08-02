@@ -2,6 +2,7 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login - SharkBotzap</title>
   <style>
     body {
@@ -11,16 +12,18 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
+      padding: 20px;
     }
 
     .login-box {
       background: white;
-      padding: 40px;
+      padding: 40px 30px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.2);
       text-align: center;
-      width: 300px;
+      width: 100%;
+      max-width: 350px;
     }
 
     h2 {
@@ -30,21 +33,23 @@
 
     input {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin: 10px 0;
       border: 1px solid #ccc;
       border-radius: 6px;
+      font-size: 15px;
     }
 
     button {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       background-color: #4a90e2;
       color: white;
       border: none;
       border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
+      font-size: 15px;
     }
 
     button:hover {
@@ -55,16 +60,38 @@
       margin-top: 15px;
       display: block;
       font-size: 14px;
+      color: #4a90e2;
+      text-decoration: none;
+    }
+
+    .register-link:hover {
+      text-decoration: underline;
     }
 
     .error {
       color: red;
       margin-bottom: 10px;
+      font-size: 14px;
     }
 
     .success {
       color: green;
       margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    @media screen and (max-width: 400px) {
+      .login-box {
+        padding: 30px 20px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      input, button {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
