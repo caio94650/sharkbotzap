@@ -18,7 +18,8 @@ router.get("/", (req, res) => {
 
 // Página de login
 router.get("/login", (req, res) => {
-  res.render("login", { error: null });
+  const success = req.query.success ? "Conta criada com sucesso!" : null;
+  res.render("login", { error: null, success });
 });
 
 // Processar login
@@ -30,13 +31,13 @@ router.post("/login", (req, res) => {
     const data = fs.readFileSync(usersFile, "utf8");
     users = JSON.parse(data);
   } catch (err) {
-    return res.render("login", { error: "Erro ao ler os dados dos usuários." });
+    return res.render("login", { error: "Erro ao ler os dados dos usuários.", success: null });
   }
 
   const user = users.find(u => u.email === email && u.password === password);
 
   if (!user) {
-    return res.render("login", { error: "E-mail ou senha inválidos." });
+    return res.render("login", { error: "E-mail ou senha inválidos.", success: null });
   }
 
   req.session.user = user;
@@ -81,7 +82,8 @@ router.post("/register", (req, res) => {
     });
   }
 
-  res.redirect("/login");
+  // ✅ Redireciona para login com mensagem de sucesso
+  res.redirect("/login?success=1");
 });
 
 // Logout
