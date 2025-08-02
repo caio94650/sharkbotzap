@@ -2,149 +2,146 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Painel - SharkBotzap</title>
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="https://i.ibb.co/3ydtSJNq/logo.png" type="image/png">
   <style>
     * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background-color: #f3f4f6;
-      color: #333;
+      background: linear-gradient(135deg, #2563eb, #3b82f6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #111827;
     }
-    header {
-      background-color: #2563eb;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
-    header img {
-      height: 40px;
-      vertical-align: middle;
-    }
-    main {
-      max-width: 700px;
-      margin: 2rem auto;
-      background-color: #fff;
-      border-radius: 12px;
+
+    .container {
+      background: #fff;
       padding: 2rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      animation: fadeIn 0.5s ease-in-out;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+      animation: fadeIn 0.6s ease;
     }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    .logo {
+      display: block;
+      margin: 0 auto 1rem;
+      height: 60px;
+    }
+
     h2 {
-      margin-top: 0;
-      color: #111827;
+      text-align: center;
+      margin: 0 0 1rem;
+      font-weight: 600;
     }
-    .info {
+
+    .info, .status, .card {
       margin-bottom: 1rem;
-    }
-    .status {
+      border-radius: 12px;
       padding: 1rem;
-      border-radius: 8px;
-      font-weight: bold;
-      margin-bottom: 1rem;
     }
-    .conectado {
-      background-color: #d1fae5;
+
+    .info {
+      background: #f1f5f9;
+    }
+
+    .status.conectado {
+      background: #d1fae5;
       color: #065f46;
     }
-    .desconectado {
-      background-color: #fee2e2;
+
+    .status.desconectado {
+      background: #fee2e2;
       color: #991b1b;
     }
+
     .qr {
       text-align: center;
-      margin-bottom: 2rem;
+      margin: 1rem 0;
     }
+
     .qr img {
       max-width: 100%;
       border: 2px solid #e5e7eb;
       border-radius: 10px;
     }
-    .btn {
-      display: block;
+
+    .btn, .btn-red {
       width: 100%;
+      display: block;
+      padding: 0.8rem;
+      font-size: 1rem;
+      font-weight: 600;
       text-align: center;
-      padding: 0.75rem;
+      margin-top: 0.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      transition: background 0.3s ease;
+    }
+
+    .btn {
       background-color: #2563eb;
       color: white;
-      text-decoration: none;
-      border: none;
-      border-radius: 6px;
-      font-size: 1rem;
-      margin-top: 1rem;
-      cursor: pointer;
-      transition: background 0.2s ease-in-out;
     }
+
     .btn:hover {
-      background-color: #1d4ed8;
+      background-color: #1e40af;
     }
+
     .btn-red {
       background-color: #ef4444;
-    }
-    .btn-red:hover {
-      background-color: #dc2626;
-    }
-    footer {
-      text-align: center;
-      font-size: 0.9rem;
-      color: #6b7280;
-      margin-top: 3rem;
-    }
-    .card {
-      background-color: #f9fafb;
-      padding: 1rem;
-      border-radius: 8px;
-      margin-top: 2rem;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    }
-    .toast {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background-color: #10b981;
       color: white;
-      padding: 12px 18px;
-      border-radius: 6px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      animation: fadeInOut 4s ease forwards;
-      z-index: 9999;
     }
-    @keyframes fadeInOut {
-      0% { opacity: 0; transform: translateY(-20px); }
-      10% { opacity: 1; transform: translateY(0); }
-      90% { opacity: 1; }
-      100% { opacity: 0; transform: translateY(-20px); }
+
+    .btn-red:hover {
+      background-color: #b91c1c;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+      text-align: left;
+    }
+
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #e2e8f0;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>SharkBotzap</h1>
-  </header>
-  <main>
+  <div class="container">
+    <img src="https://i.ibb.co/3ydtSJNq/logo.png" alt="Logo SharkBotzap" class="logo">
+    <h2>Olá, <%= user.name %> 👋</h2>
+
     <div class="info">
-      <h2>Bem-vindo, <%= user.name %></h2>
-      <p>Email: <strong><%= user.email %></strong></p>
+      <p><strong>Email:</strong> <%= user.email %></p>
     </div>
 
     <div class="status <%= status.status === 'conectado' ? 'conectado' : 'desconectado' %>">
-      Status: <%= status.status %>
+      Status do WhatsApp: <%= status.status %>
     </div>
 
     <% if (qr) { %>
       <div class="qr">
-        <p>Escaneie o QR Code abaixo com o WhatsApp:</p>
+        <p>Escaneie o QR Code abaixo com seu WhatsApp:</p>
         <img src="<%= qr %>" alt="QR Code WhatsApp">
       </div>
     <% } else if (status.status !== 'conectado') { %>
-      <p style="text-align:center;">Nenhum QR Code disponível. Clique no botão abaixo para conectar.</p>
+      <p style="text-align:center;">Nenhum QR Code disponível no momento.</p>
     <% } %>
 
     <% if (status.status !== 'conectado') { %>
@@ -152,7 +149,7 @@
         <button class="btn" type="submit">Conectar WhatsApp</button>
       </form>
     <% } else { %>
-      <p style="text-align:center;">✅ Dispositivo já está conectado ao WhatsApp.</p>
+      <p style="text-align:center;">✅ Dispositivo já conectado!</p>
     <% } %>
 
     <form action="/dashboard/aquecedor" method="POST">
@@ -160,25 +157,19 @@
     </form>
 
     <form action="/dashboard/desconectar" method="POST">
-      <button class="btn btn-red" type="submit">Desconectar WhatsApp</button>
+      <button class="btn-red" type="submit">Desconectar WhatsApp</button>
     </form>
 
     <div class="card">
       <h3>📌 Instruções</h3>
       <ul>
         <li>1. Clique em <strong>Conectar WhatsApp</strong> e escaneie o QR Code</li>
-        <li>2. Após conectado, inicie o aquecedor automático</li>
-        <li>3. Use a opção "Desconectar" se quiser reiniciar</li>
+        <li>2. Após conectar, clique em "Iniciar Aquecedor"</li>
+        <li>3. Para reiniciar, use o botão "Desconectar"</li>
       </ul>
     </div>
-  </main>
 
-  <footer>
-    &copy; <%= new Date().getFullYear() %> SharkBotzap. Todos os direitos reservados.
-  </footer>
-
-  <% if (typeof success !== 'undefined') { %>
-    <div class="toast"><%= success %></div>
-  <% } %>
+    <footer>&copy; <%= new Date().getFullYear() %> SharkBotzap. Todos os direitos reservados.</footer>
+  </div>
 </body>
 </html>
