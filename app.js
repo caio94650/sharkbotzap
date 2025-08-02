@@ -2,7 +2,7 @@ const express = require("express");
 const session = require("express-session");
 const path = require("path");
 
-const authRoutes = require("./rotas/auth");
+onst authRoutes = require('./routes/auth');
 const dashboardRoutes = require("./rotas/dashboard");
 
 const app = express();
