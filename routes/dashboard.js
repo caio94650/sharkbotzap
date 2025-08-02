@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -10,14 +11,12 @@ router.get("/", (req, res) => {
 
   const sessionId = req.session.user.email.replace(/[@.]/g, "_");
 
-  // Carregar o QR Code salvo (se existir)
   const qrPath = path.join(__dirname, "..", "qr", `${sessionId}.txt`);
   let qrCode = null;
   if (fs.existsSync(qrPath)) {
     qrCode = fs.readFileSync(qrPath, "utf8");
   }
 
-  // Ler o status.json e pegar status da sessão
   const statusPath = path.join(__dirname, "..", "status.json");
   let statusData = {};
   if (fs.existsSync(statusPath)) {
@@ -37,8 +36,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/aquecedor", (req, res) => {
-  // Esse botão só aciona visualmente por enquanto
-  // Pode acionar um sistema real de controle em breve
+  // Ação do botão de aquecimento (futuro)
   res.redirect("/dashboard");
 });
 
