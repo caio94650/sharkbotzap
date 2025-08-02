@@ -22,9 +22,8 @@ app.use(
   session({
     secret: "sharkbotzap_secret",
     resave: false,
-    saveUninitialized: false, // evitar sessões vazias
+    saveUninitialized: false, // <- aqui
     cookie: {
-      secure: process.env.NODE_ENV === "production", // usa cookie seguro só em prod
       maxAge: 24 * 60 * 60 * 1000 // 1 dia
     }
   })
