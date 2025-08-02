@@ -22,7 +22,7 @@ app.use(
   session({
     secret: "sharkbotzap_secret",
     resave: false,
-    saveUninitialized: false, // <- aqui
+    saveUninitialized: false,
     cookie: {
       maxAge: 24 * 60 * 60 * 1000 // 1 dia
     }
@@ -32,6 +32,11 @@ app.use(
 // Rotas
 app.use("/", authRoutes);
 app.use("/dashboard", dashboardRoutes);
+
+// Página 404 personalizada
+app.use((req, res) => {
+  res.status(404).render("404");
+});
 
 // Inicialização do servidor
 const PORT = process.env.PORT || 3000;
