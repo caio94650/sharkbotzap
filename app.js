@@ -2,13 +2,13 @@ const express = require("express");
 const session = require("express-session");
 const path = require("path");
 
-const authRoutes = require("./routes/auth");
-const dashboardRoutes = require("./routes/dashboard");
+const authRoutes = require("./rotas/autenticação");
+const dashboardRoutes = require("./rotas/painel");
 
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
+app.use(express.static("público"));
 app.set("view engine", "ejs");
 
 app.use(
@@ -20,9 +20,9 @@ app.use(
 );
 
 app.use("/", authRoutes);
-app.use("/dashboard", dashboardRoutes);
+app.use("/painel", dashboardRoutes);
 
-const porta = process.env.PORT || 3000;
-aplicativo.listen(porta, () => {
-  console.log(`✅ SharkBotzap rodando na porta ${porta}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`✅ SharkBotzap rodando na porta ${PORT}`);
 });
