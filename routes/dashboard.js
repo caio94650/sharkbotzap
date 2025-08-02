@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const fs = require("fs");
 const qrcode = require("qrcode");
-const { default: makeWASocket, useSingleFileAuthState } = require("@whiskeysockets/baileys");
+const { default: makeWASocket, useMultiFileAuthState } = require("@whiskeysockets/baileys");
 
 const router = express.Router();
 
@@ -57,14 +57,14 @@ router.post("/conectar", async (req, res) => {
     }
 
     const sessionId = email.replace(/[@.]/g, "_");
-    const sessionFile = path.join(__dirname, "..", "sessions", `${sessionId}.json`);
+    const sessionDir = path.join(__dirname, "..", "sessions", sessionId);
     const qrFilePath = path.join(__dirname, "..", "qr", `${sessionId}.txt`);
     const statusPath = path.join(__dirname, "..", "status.json");
 
     console.log("➡️ Iniciando conexão para:", sessionId);
-    console.log("📁 Caminho da sessão:", sessionFile);
+    console.log("📁 Diretório da sessão:", sessionDir);
 
-    const { state, saveState } = useSingleFileAuthState(sessionFile);
+    const { state, saveCreds } = await useMultiFileAuthState(sessionDir);
 
     const sock = makeWASocket({
       auth: state,
@@ -99,7 +99,7 @@ router.post("/conectar", async (req, res) => {
       }
     });
 
-    sock.ev.on("creds.update", saveState);
+    sock.ev.on("creds.update", saveCreds);
 
     res.redirect("/dashboard");
   } catch (err) {
