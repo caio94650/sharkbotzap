@@ -11,6 +11,11 @@ if (!fs.existsSync(usersFile)) {
   fs.writeFileSync(usersFile, "[]");
 }
 
+// Redirecionar "/" para "/login"
+router.get("/", (req, res) => {
+  res.redirect("/login");
+});
+
 // Página de login
 router.get("/login", (req, res) => {
   res.render("login", { error: null });
