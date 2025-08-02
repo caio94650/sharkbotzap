@@ -47,14 +47,18 @@ router.post("/register", (req, res) => {
 
   const alreadyExists = users.find(u => u.email === email);
   if (alreadyExists) {
-    return res.render("register", { error: "Este e-mail já está cadastrado.", success: null });
+    return res.render("register", {
+      error: "Este e-mail já está cadastrado.",
+      success: null
+    });
   }
 
   const newUser = { name, email, password };
   users.push(newUser);
   fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
 
-  res.render("register", { error: null, success: "Cadastro realizado com sucesso! Faça login agora." });
+  // ✅ Redireciona para login após cadastro
+  res.redirect("/login");
 });
 
 // Logout
