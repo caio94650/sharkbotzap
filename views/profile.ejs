@@ -1,14 +1,18 @@
 <%- include('partials/header', { title: 'Meu Perfil' }) %>
 <%- include('partials/navbar') %>
 
-<main class="card">
-  <h2>Meu Perfil</h2>
-  <p><strong>Nome:</strong> <%= user.name %></p>
-  <p><strong>Email:</strong> <%= user.email %></p>
+<body style="background: linear-gradient(135deg, #2563eb, #3b82f6); min-height: 100vh; padding: 2rem;">
 
-  <p style="margin-top: 2rem; font-size: 0.9rem; color: #6b7280;">
-    Em breve: edição de perfil, senha e preferências.
-  </p>
-</main>
+  <main class="card">
+    <h2>Meu Perfil</h2>
+    <p><strong>Nome:</strong> <%= user.name %></p>
+    <p><strong>Email:</strong> <%= user.email %></p>
 
-<%- include('partials/footer') %>
+    <p style="margin-top: 2rem; font-size: 0.9rem; color: #6b7280;">
+      Em breve: edição de perfil, senha e preferências.
+    </p>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>
