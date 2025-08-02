@@ -9,7 +9,7 @@
       font-family: 'Segoe UI', sans-serif;
       background: #f0f4f8;
       margin: 0;
-      padding: 30px 15px;
+      padding: 30px;
     }
 
     .container {
@@ -30,8 +30,13 @@
       padding: 15px;
       border-radius: 6px;
       margin-top: 20px;
-      font-family: monospace;
-      white-space: pre-wrap;
+      text-align: center;
+    }
+
+    .qr-box img {
+      max-width: 300px;
+      width: 100%;
+      margin-top: 10px;
     }
 
     .status-box {
@@ -70,34 +75,6 @@
     .logout:hover {
       background-color: #a93226;
     }
-
-    .connected-indicator {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      display: inline-block;
-      margin-right: 8px;
-    }
-
-    .status-header {
-      display: flex;
-      align-items: center;
-      margin-top: 10px;
-      font-weight: bold;
-    }
-
-    .green { background-color: #27ae60; }
-    .red { background-color: #e74c3c; }
-
-    @media screen and (max-width: 600px) {
-      .container {
-        padding: 25px 20px;
-      }
-
-      button, .logout {
-        width: 100%;
-      }
-    }
   </style>
 </head>
 <body>
@@ -106,29 +83,25 @@
     <p>Email: <%= user.email %></p>
 
     <% if (qr) { %>
-      <div class="qr-box"><%= qr %></div>
+      <div class="qr-box">
+        <p><strong>Escaneie o QR Code abaixo com o WhatsApp:</strong></p>
+        <img src="<%= qr %>" alt="QR Code WhatsApp" />
+      </div>
     <% } else { %>
-      <p style="color: #999;">QR Code ainda não gerado ou sessão já conectada.</p>
+      <p>QR Code ainda não gerado. <form style="display:inline;" method="POST" action="/dashboard/conectar"><button type="submit">Conectar WhatsApp</button></form></p>
     <% } %>
 
     <div class="status-box">
-      <div class="status-header">
-        <% if (status.status === 'conectado') { %>
-          <span class="connected-indicator green"></span>
-        <% } else { %>
-          <span class="connected-indicator red"></span>
-        <% } %>
-        <span>Status: <%= status.status %></span>
-      </div>
-      <div><strong>Última Mensagem:</strong> <%= status.lastMessage %></div>
+      <strong>Status:</strong> <%= status.status %><br>
+      <strong>Última Mensagem:</strong> <%= status.lastMessage %>
     </div>
 
-    <% if (!qr) { %>
-      <p style="margin-top: 10px; color: #666;">Conecte-se ao WhatsApp para iniciar o aquecedor.</p>
+    <% if (qr) { %>
+    <form action="/dashboard/aquecedor" method="POST">
+      <button type="submit">Iniciar Aquecedor</button>
+    </form>
     <% } else { %>
-      <form action="/dashboard/aquecedor" method="POST">
-        <button type="submit">Iniciar Aquecedor</button>
-      </form>
+    <p style="margin-top: 20px; color: #888;">Conecte-se ao WhatsApp para iniciar o aquecedor.</p>
     <% } %>
 
     <a class="logout" href="/logout">Sair</a>
