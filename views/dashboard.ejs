@@ -3,77 +3,114 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Painel - SharkBotzap</title>
+  <title>SharkBotzap - Painel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
       margin: 0;
       padding: 0;
+      background: #f2f3f5;
+      color: #333;
     }
     header {
-      background: #1f6feb;
+      background: #1e6fff;
       color: white;
-      padding: 15px;
+      padding: 20px;
       text-align: center;
+      font-size: 1.6rem;
+      font-weight: 700;
     }
     main {
-      max-width: 600px;
-      margin: 30px auto;
+      max-width: 500px;
+      margin: 40px auto;
       background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     }
     h2 {
       margin-top: 0;
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+    .info p {
+      margin: 8px 0;
     }
     .status {
-      margin-top: 10px;
-      padding: 10px;
-      border-radius: 5px;
-      font-weight: bold;
+      margin: 20px 0;
+      padding: 12px;
+      border-radius: 6px;
+      font-weight: 600;
+      text-align: center;
     }
-    .status.conectado {
-      background-color: #d4edda;
-      color: #155724;
+    .conectado {
+      background-color: #e6ffed;
+      color: #2e7d32;
     }
-    .status.desconectado {
-      background-color: #f8d7da;
-      color: #721c24;
+    .desconectado {
+      background-color: #ffe4e6;
+      color: #c62828;
     }
     .qr {
       text-align: center;
-      margin-top: 20px;
+      margin: 20px 0;
     }
     .qr img {
-      width: 250px;
-      border: 1px solid #ccc;
+      width: 240px;
       border-radius: 8px;
+      border: 1px solid #ccc;
     }
     .btn {
-      display: inline-block;
-      padding: 10px 15px;
-      background: #1f6feb;
+      display: block;
+      width: 100%;
+      background: #1e6fff;
       color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      margin-top: 15px;
       border: none;
+      border-radius: 6px;
+      padding: 12px;
+      margin: 10px 0;
+      font-weight: 600;
       cursor: pointer;
+      transition: background 0.3s;
     }
     .btn:hover {
-      background: #0e4bb8;
+      background: #125ce0;
+    }
+    .footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #888;
+      margin-top: 40px;
     }
   </style>
+  <script>
+    setInterval(() => {
+      fetch('/dashboard')
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          const statusDiv = doc.querySelector('.status');
+          const qrImg = doc.querySelector('.qr img');
+          if (statusDiv && qrImg) {
+            document.querySelector('.status').outerHTML = statusDiv.outerHTML;
+            document.querySelector('.qr img').src = qrImg.src;
+          }
+        });
+    }, 6000);
+  </script>
 </head>
 <body>
-  <header>
-    <h1>SharkBotzap</h1>
-  </header>
+  <header>SharkBotzap</header>
   <main>
     <h2>Bem-vindo, <%= user.name %></h2>
-    <p>Email: <strong><%= user.email %></strong></p>
+    <div class="info">
+      <p>Email: <strong><%= user.email %></strong></p>
+    </div>
 
     <div class="status <%= status.status === 'conectado' ? 'conectado' : 'desconectado' %>">
       Status: <%= status.status %>
@@ -85,7 +122,7 @@
         <img src="<%= qr %>" alt="QR Code WhatsApp">
       </div>
     <% } else if (status.status !== 'conectado') { %>
-      <p>Nenhum QR Code disponível. Clique no botão abaixo para conectar.</p>
+      <p style="text-align: center; color: #999;">Nenhum QR Code disponível no momento.</p>
     <% } %>
 
     <% if (status.status !== 'conectado') { %>
@@ -93,18 +130,19 @@
         <button class="btn" type="submit">Conectar WhatsApp</button>
       </form>
     <% } else { %>
-      <p>✅ Dispositivo já está conectado ao WhatsApp.</p>
+      <p style="text-align: center; color: #4caf50;">✅ Dispositivo conectado com sucesso.</p>
     <% } %>
 
     <form action="/dashboard/aquecedor" method="POST">
       <button class="btn" type="submit">Iniciar Aquecedor</button>
     </form>
 
-    <!-- 🔧 Formulário de debug -->
     <form action="/dashboard/debug" method="POST">
       <button class="btn" type="submit">Testar POST (Debug)</button>
     </form>
-
   </main>
+  <div class="footer">
+    &copy; 2025 SharkBotzap. Todos os direitos reservados.
+  </div>
 </body>
 </html>
