@@ -95,16 +95,16 @@
     <h2>Crie sua Conta</h2>
     <form action="/register" method="POST">
       <input type="text" name="name" placeholder="Seu nome" required />
-      <input type="email" name="email" placeholder="E-mail" required />
-      <input type="password" name="password" placeholder="Senha" required />
+      <input type="email" name="email" placeholder="E-mail" required autocomplete="off" />
+      <input type="password" name="password" placeholder="Senha" required autocomplete="off" />
       <button type="submit">Cadastrar</button>
     </form>
 
-    <% if (typeof error !== "undefined") { %>
+    <% if (error) { %>
       <div class="error-message"><%= error %></div>
     <% } %>
 
-    <% if (typeof success !== "undefined") { %>
+    <% if (success) { %>
       <div class="success-message"><%= success %></div>
     <% } %>
 
