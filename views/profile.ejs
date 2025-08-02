@@ -1,7 +1,14 @@
-<%- include('partials/header', { title: 'Perfil' }) %>
+<%- include('partials/header', { title: 'Meu Perfil' }) %>
+<%- include('partials/navbar') %>
+
 <main class="card">
-  <h2>Perfil do Usuário</h2>
+  <h2>Meu Perfil</h2>
   <p><strong>Nome:</strong> <%= user.name %></p>
   <p><strong>Email:</strong> <%= user.email %></p>
+
+  <p style="margin-top: 2rem; font-size: 0.9rem; color: #6b7280;">
+    Em breve: edição de perfil, senha e preferências.
+  </p>
 </main>
+
 <%- include('partials/footer') %>
