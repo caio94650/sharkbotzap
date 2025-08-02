@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head><title>Painel - SharkBotzap</title></head>
+<body>
+  <h2>Bem-vindo, <%= user.name %></h2>
+  <% if (qr) { %>
+    <p>Escaneie o QR Code abaixo no WhatsApp:</p>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?data=<%= qr %>&size=200x200" />
+  <% } else { %>
+    <p>Você já está conectado! ✅</p>
+  <% } %>
+  <br>
+  <a href="/logout">Sair</a>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard - SharkBotzap</title>
+  <style>
+    body {
+      margin: 0;
+      background: #438cc8;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: #ffffff;
+      color: #333;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    button {
+      background: #438cc8;
+      border: none;
+      color: white;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #356ca4;
+    }
+
+    img {
+      margin-top: 20px;
+      max-width: 100%;
+      height: auto;
+      border: 3px solid #438cc8;
+      border-radius: 12px;
+    }
+
+    a {
+      color: #222;
+      display: block;
+      margin-top: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .status-box {
+      background: #f5f5f5;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      color: #000;
+      text-align: left;
+    }
+
+    .status-box p {
+      margin: 8px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Bem-vindo, <%= user.name %>!</h2>
+
+    <div class="status-box">
+      <p><strong>📱 Sessão:</strong> <%= user.email.replace(/[@.]/g, "_") %></p>
+      <p><strong>Status:</strong>
+        <% if (status.status === "connected") { %>
+          🟢 Conectado
+        <% } else if (status.status === "connecting") { %>
+          ⏳ Conectando
+        <% } else { %>
+          🔴 Desconectado
+        <% } %>
+      </p>
+      <p><strong>Última mensagem:</strong> <%= status.lastMessage %></p>
+    </div>
+
+    <p>Clique abaixo para conectar seu WhatsApp:</p>
+
+    <form action="/dashboard/aquecedor" method="POST" style="margin-top: 20px;">
+      <button type="submit">🔥 Ativar Aquecimento</button>
+    </form>
+    
+    <button onclick="document.getElementById('qr-box').style.display = 'block'">
+      📲 Conectar WhatsApp
+    </button>
+
+    <div id="qr-box" style="display: none;">
+      <% if (qr) { %>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?data=<%= qr %>&size=600x600" alt="QR Code WhatsApp" />
+      <% } else { %>
+        <p style="margin-top: 20px;">✅ Você já está conectado ao WhatsApp!</p>
+      <% } %>
+    </div>
+
+    <a href="/logout">Sair</a>
+  </div>
+</body>
+</html>
