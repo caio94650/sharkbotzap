@@ -4,101 +4,180 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard - SharkBotzap</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f0f4f8;
       margin: 0;
-      padding: 30px;
+      font-family: 'Inter', sans-serif;
+      background: #f2f6fa;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 15px;
+      min-height: 100vh;
     }
 
     .container {
-      max-width: 700px;
-      margin: auto;
-      background: white;
-      border-radius: 10px;
-      padding: 40px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 600px;
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .logo img {
+      height: 50px;
     }
 
     h1 {
-      color: #438cc8;
+      margin: 0;
+      font-size: 22px;
+      color: #2c82c9;
+    }
+
+    p {
+      margin: 8px 0;
+      font-size: 15px;
     }
 
     .qr-box {
-      background: #eef3f8;
+      background: #f0f4f8;
       padding: 15px;
-      border-radius: 6px;
-      margin-top: 20px;
+      border-radius: 8px;
       font-family: monospace;
       white-space: pre-wrap;
       word-break: break-word;
+      margin-top: 20px;
+      font-size: 14px;
     }
 
     .status-box {
-      margin-top: 30px;
+      margin-top: 25px;
       background: #dff0d8;
       padding: 15px;
       border-radius: 6px;
       color: #3c763d;
+      font-size: 14px;
     }
 
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #438cc8;
-      color: white;
+    .actions {
+      margin-top: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 12px;
+      font-size: 15px;
       border: none;
       border-radius: 6px;
-      font-size: 16px;
       cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s ease;
     }
 
-    button:hover {
-      background-color: #356ca4;
-    }
-
-    .logout {
-      display: inline-block;
-      margin-top: 20px;
-      background-color: #c0392b;
-      padding: 10px 20px;
+    .btn-primary {
+      background: #2c82c9;
       color: white;
-      border-radius: 6px;
-      text-decoration: none;
     }
 
-    .logout:hover {
-      background-color: #a93226;
+    .btn-primary:hover {
+      background: #1e6cad;
+    }
+
+    .btn-reload {
+      background: #f39c12;
+      color: white;
+    }
+
+    .btn-reload:hover {
+      background: #e67e22;
+    }
+
+    .btn-logout {
+      background: #c0392b;
+      color: white;
+    }
+
+    .btn-logout:hover {
+      background: #a93226;
+    }
+
+    .muted {
+      color: #777;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px;
+      }
+
+      .logo img {
+        height: 40px;
+      }
+
+      h1 {
+        font-size: 20px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
+    <div class="logo">
+      <img src="https://i.imgur.com/JBq7bmF.png" alt="SharkBotzap Logo" />
+    </div>
+
     <h1>Bem-vindo, <%= user.name %>!</h1>
     <p>Email: <%= user.email %></p>
 
     <% if (qr) { %>
       <div class="qr-box"><%= qr %></div>
-      <form action="/dashboard/aquecedor" method="POST">
-        <button type="submit">Iniciar Aquecedor</button>
-      </form>
+      <div class="actions">
+        <form action="/dashboard/aquecedor" method="POST">
+          <button type="submit" class="btn btn-primary">Iniciar Aquecedor</button>
+        </form>
+        <form action="/dashboard" method="GET">
+          <button type="submit" class="btn btn-reload">🔁 Recarregar QR Code</button>
+        </form>
+      </div>
     <% } else if (status.status === "conectado") { %>
-      <p style="color: green;">✅ Seu WhatsApp já está conectado!</p>
+      <p style="color: green; font-weight: bold;">✅ Seu WhatsApp já está conectado!</p>
       <form action="/dashboard/aquecedor" method="POST">
-        <button type="submit">Iniciar Aquecedor</button>
+        <button type="submit" class="btn btn-primary">Iniciar Aquecedor</button>
       </form>
     <% } else { %>
-      <p style="color: gray;">📲 Aguardando conexão via QR Code...</p>
-      <p>Conecte-se ao WhatsApp para iniciar o aquecedor.</p>
+      <p class="muted">📲 Aguardando conexão via QR Code...</p>
+      <p class="muted">Conecte-se ao WhatsApp para iniciar o aquecedor.</p>
+      <form action="/dashboard" method="GET">
+        <button type="submit" class="btn btn-reload">🔁 Recarregar</button>
+      </form>
     <% } %>
 
     <div class="status-box">
-      <strong>Status:</strong> <%= status.status %><br>
+      <strong>Status:</strong> <%= status.status %><br />
       <strong>Última Mensagem:</strong> <%= status.lastMessage %>
     </div>
 
-    <a class="logout" href="/logout">Sair</a>
+    <form action="/logout" method="GET" class="actions">
+      <button class="btn btn-logout">Sair</button>
+    </form>
   </div>
 </body>
 </html>
