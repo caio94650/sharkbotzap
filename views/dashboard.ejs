@@ -59,6 +59,8 @@
       text-decoration: none;
       border-radius: 5px;
       margin-top: 15px;
+      border: none;
+      cursor: pointer;
     }
     .btn:hover {
       background: #0e4bb8;
@@ -97,6 +99,12 @@
     <form action="/dashboard/aquecedor" method="POST">
       <button class="btn" type="submit">Iniciar Aquecedor</button>
     </form>
+
+    <!-- 🔧 Formulário de debug -->
+    <form action="/dashboard/debug" method="POST">
+      <button class="btn" type="submit">Testar POST (Debug)</button>
+    </form>
+
   </main>
 </body>
 </html>
