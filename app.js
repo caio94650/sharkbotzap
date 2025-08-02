@@ -22,6 +22,7 @@ app.use(
 app.use("/", authRoutes);
 app.use("/dashboard", dashboardRoutes);
 
-app.listen(3000, () => {
-  console.log("✅ SharkBotzap rodando em http://localhost:3000");
+const porta = process.env.PORT || 3000;
+aplicativo.listen(porta, () => {
+  console.log(`✅ SharkBotzap rodando na porta ${porta}`);
 });
