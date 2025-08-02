@@ -5,22 +5,23 @@
   <div class="container">
     <div class="card">
       <img src="https://i.ibb.co/3ydtSJNq/logo.png" alt="Logo SharkBotzap" class="logo">
-
       <h2>Olá, <%= user.name %> 👋</h2>
+
       <div class="info">
         <p><strong>Email:</strong> <%= user.email %></p>
-        <p class="status <%= status.status === 'conectado' ? 'conectado' : 'desconectado' %>">
-          Status do WhatsApp: <%= status.status %>
-        </p>
+      </div>
+
+      <div class="status <%= status.status === 'conectado' ? 'conectado' : 'desconectado' %>">
+        Status do WhatsApp: <%= status.status %>
       </div>
 
       <% if (qr) { %>
         <div class="qr">
-          <p>📲 Escaneie o QR Code abaixo com seu WhatsApp:</p>
+          <p>Escaneie o QR Code abaixo com seu WhatsApp:</p>
           <img src="<%= qr %>" alt="QR Code WhatsApp">
         </div>
       <% } else if (status.status !== 'conectado') { %>
-        <p style="text-align:center;">⚠️ Nenhum QR Code disponível no momento.</p>
+        <p style="text-align:center;">Nenhum QR Code disponível no momento.</p>
       <% } %>
 
       <% if (status.status !== 'conectado') { %>
@@ -41,15 +42,15 @@
 
       <div class="instrucoes">
         <h3>📌 Instruções</h3>
-        <ul style="text-align: left;">
+        <ul>
           <li>1. Clique em <strong>Conectar WhatsApp</strong> e escaneie o QR Code</li>
           <li>2. Após conectar, clique em "Iniciar Aquecedor"</li>
           <li>3. Para reiniciar, use o botão "Desconectar"</li>
         </ul>
       </div>
+
+      <%- include('partials/footer') %>
     </div>
   </div>
-
-  <%- include('partials/footer') %>
 </body>
 </html>
