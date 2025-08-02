@@ -38,9 +38,10 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    .login-container img {
+    .logo {
       width: 120px;
-      margin-bottom: 1rem;
+      margin: 0 auto 1rem;
+      display: block;
     }
 
     .typing-text {
@@ -51,12 +52,12 @@
       border-right: 2px solid white;
       width: 0;
       margin: 0 auto 2rem;
-      animation: typing 2s steps(14, end) forwards, blink 0.8s step-end infinite;
+      animation: typing 2.2s steps(20, end) forwards, blink 0.8s step-end infinite;
     }
 
     @keyframes typing {
       from { width: 0; }
-      to { width: 13ch; }
+      to { width: 14ch; }
     }
 
     @keyframes blink {
