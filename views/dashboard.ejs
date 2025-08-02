@@ -15,45 +15,48 @@
       color: #333;
     }
     header {
-      background-color: #1e40af;
+      background-color: #2563eb;
       color: white;
       padding: 1rem;
       text-align: center;
     }
     header img {
       height: 40px;
+      vertical-align: middle;
     }
     main {
-      max-width: 800px;
+      max-width: 700px;
       margin: 2rem auto;
       background-color: #fff;
       border-radius: 12px;
       padding: 2rem;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     h2 {
       margin-top: 0;
       color: #111827;
     }
     .info {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
-    .cards {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-bottom: 1.5rem;
-    }
-    .card {
-      flex: 1 1 180px;
-      background: linear-gradient(145deg, #f9fafb, #d1d5db);
+    .status {
       padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      transition: transform 0.2s;
+      border-radius: 8px;
+      font-weight: bold;
+      margin-bottom: 1rem;
     }
-    .card:hover {
-      transform: translateY(-4px);
+    .conectado {
+      background-color: #d1fae5;
+      color: #065f46;
+    }
+    .desconectado {
+      background-color: #fee2e2;
+      color: #991b1b;
     }
     .qr {
       text-align: center;
@@ -82,21 +85,42 @@
     .btn:hover {
       background-color: #1d4ed8;
     }
-    .instructions {
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
-      padding: 1rem;
-      margin-top: 2rem;
+    .btn-red {
+      background-color: #ef4444;
     }
-    .instructions h3 {
-      margin-top: 0;
+    .btn-red:hover {
+      background-color: #dc2626;
     }
     footer {
       text-align: center;
       font-size: 0.9rem;
       color: #6b7280;
       margin-top: 3rem;
+    }
+    .card {
+      background-color: #f9fafb;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 2rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #10b981;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      animation: fadeInOut 4s ease forwards;
+      z-index: 9999;
+    }
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(-20px); }
+      10% { opacity: 1; transform: translateY(0); }
+      90% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(-20px); }
     }
   </style>
 </head>
@@ -110,15 +134,8 @@
       <p>Email: <strong><%= user.email %></strong></p>
     </div>
 
-    <div class="cards">
-      <div class="card">
-        <strong>Status:</strong><br>
-        <span><%= status.status %></span>
-      </div>
-      <div class="card">
-        <strong>Última Ação:</strong><br>
-        <span><%= status.lastMessage || '-' %></span>
-      </div>
+    <div class="status <%= status.status === 'conectado' ? 'conectado' : 'desconectado' %>">
+      Status: <%= status.status %>
     </div>
 
     <% if (qr) { %>
@@ -135,27 +152,33 @@
         <button class="btn" type="submit">Conectar WhatsApp</button>
       </form>
     <% } else { %>
-      <form action="/dashboard/desconectar" method="POST">
-        <button class="btn" type="submit">Desconectar WhatsApp</button>
-      </form>
+      <p style="text-align:center;">✅ Dispositivo já está conectado ao WhatsApp.</p>
     <% } %>
 
     <form action="/dashboard/aquecedor" method="POST">
       <button class="btn" type="submit">Iniciar Aquecedor</button>
     </form>
 
-    <div class="instructions">
-      <h3>📘 Instruções de Uso</h3>
+    <form action="/dashboard/desconectar" method="POST">
+      <button class="btn btn-red" type="submit">Desconectar WhatsApp</button>
+    </form>
+
+    <div class="card">
+      <h3>📌 Instruções</h3>
       <ul>
-        <li>Clique em "Conectar WhatsApp" para gerar o QR Code.</li>
-        <li>Escaneie o QR Code com seu aplicativo WhatsApp.</li>
-        <li>Após conectado, você pode iniciar o aquecimento automático.</li>
-        <li>Para trocar de número, clique em "Desconectar WhatsApp".</li>
+        <li>1. Clique em <strong>Conectar WhatsApp</strong> e escaneie o QR Code</li>
+        <li>2. Após conectado, inicie o aquecedor automático</li>
+        <li>3. Use a opção "Desconectar" se quiser reiniciar</li>
       </ul>
     </div>
   </main>
+
   <footer>
     &copy; <%= new Date().getFullYear() %> SharkBotzap. Todos os direitos reservados.
   </footer>
+
+  <% if (typeof success !== 'undefined') { %>
+    <div class="toast"><%= success %></div>
+  <% } %>
 </body>
 </html>
