@@ -108,6 +108,12 @@ router.post("/conectar", async (req, res) => {
   }
 });
 
+// ✅ ROTA DE DEBUG TEMPORÁRIA PARA TESTE DE FORMULÁRIO
+router.post("/debug", (req, res) => {
+  console.log("✅ POST /debug recebido!");
+  res.send("Debug OK!");
+});
+
 // Futuro: botão de aquecimento
 router.post("/aquecedor", (req, res) => {
   res.redirect("/dashboard");
