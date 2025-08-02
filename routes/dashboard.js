@@ -13,17 +13,26 @@ router.get("/", (req, res) => {
   }
 
   const sessionId = req.session.user.email.replace(/[@.]/g, "_");
-
   const qrPath = path.join(__dirname, "..", "qr", `${sessionId}.txt`);
   let qrCode = null;
-  if (fs.existsSync(qrPath)) {
-    qrCode = fs.readFileSync(qrPath, "utf8");
+
+  try {
+    if (fs.existsSync(qrPath)) {
+      qrCode = fs.readFileSync(qrPath, "utf8");
+    }
+  } catch (err) {
+    console.error("Erro ao ler QR Code:", err);
   }
 
   const statusPath = path.join(__dirname, "..", "status.json");
   let statusData = {};
-  if (fs.existsSync(statusPath)) {
-    statusData = JSON.parse(fs.readFileSync(statusPath));
+
+  try {
+    if (fs.existsSync(statusPath)) {
+      statusData = JSON.parse(fs.readFileSync(statusPath));
+    }
+  } catch (err) {
+    console.error("Erro ao ler status.json:", err);
   }
 
   const currentStatus = statusData[sessionId] || {
@@ -40,17 +49,23 @@ router.get("/", (req, res) => {
 
 // Rota POST - Conectar WhatsApp
 router.post("/conectar", async (req, res) => {
-  const email = req.session.user?.email;
-  if (!email) return res.status(401).send("Usuário não autenticado.");
-
-  const sessionId = email.replace(/[@.]/g, "_");
-  const sessionFile = path.join(__dirname, "..", "sessions", `${sessionId}.json`);
-  const qrFilePath = path.join(__dirname, "..", "qr", `${sessionId}.txt`);
-  const statusPath = path.join(__dirname, "..", "status.json");
-
-  const { state, saveState } = useSingleFileAuthState(sessionFile);
-
   try {
+    const email = req.session.user?.email;
+    if (!email) {
+      console.warn("Tentativa de conexão sem sessão ativa.");
+      return res.status(401).send("Usuário não autenticado.");
+    }
+
+    const sessionId = email.replace(/[@.]/g, "_");
+    const sessionFile = path.join(__dirname, "..", "sessions", `${sessionId}.json`);
+    const qrFilePath = path.join(__dirname, "..", "qr", `${sessionId}.txt`);
+    const statusPath = path.join(__dirname, "..", "status.json");
+
+    console.log("➡️ Iniciando conexão para:", sessionId);
+    console.log("📁 Caminho da sessão:", sessionFile);
+
+    const { state, saveState } = useSingleFileAuthState(sessionFile);
+
     const sock = makeWASocket({
       auth: state,
       printQRInTerminal: false
@@ -60,15 +75,16 @@ router.post("/conectar", async (req, res) => {
       const { connection, qr } = update;
 
       if (qr) {
+        console.log("📸 QR Code gerado");
         const qrBase64 = await qrcode.toDataURL(qr);
         fs.writeFileSync(qrFilePath, qrBase64);
       }
 
       if (connection === "open") {
-        console.log("✅ Conectado:", sessionId);
+        console.log("✅ WhatsApp conectado com sucesso:", sessionId);
+
         if (fs.existsSync(qrFilePath)) fs.unlinkSync(qrFilePath);
 
-        // Atualiza o status
         let statusData = {};
         if (fs.existsSync(statusPath)) {
           statusData = JSON.parse(fs.readFileSync(statusPath));
@@ -87,8 +103,8 @@ router.post("/conectar", async (req, res) => {
 
     res.redirect("/dashboard");
   } catch (err) {
-    console.error("Erro ao conectar:", err);
-    res.status(500).send("Erro ao conectar com o WhatsApp.");
+    console.error("❌ Erro ao conectar com o WhatsApp:", err);
+    res.status(500).send("Erro interno ao tentar conectar com o WhatsApp.");
   }
 });
 
