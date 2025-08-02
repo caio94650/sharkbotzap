@@ -1,14 +1,151 @@
 <!DOCTYPE html>
-<html>
-<head><title>Registrar</title></head>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel - SharkBotzap</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f1f4f9;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 15px;
+      min-height: 100vh;
+    }
+
+    .dashboard-container {
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #438cc8;
+      text-align: center;
+    }
+
+    .info-card {
+      background: #f9fafc;
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .info-card p {
+      margin: 10px 0;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .connected {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .connecting {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+
+    .disconnected {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #438cc8;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #356ca4;
+    }
+
+    img {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 300px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .logout-link {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .logout-link a {
+      text-decoration: none;
+      color: #356ca4;
+      font-weight: bold;
+    }
+
+    @media screen and (max-width: 500px) {
+      .dashboard-container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
 <body>
-  <h2>Registrar - SharkBotzap</h2>
-  <form action="/register" method="POST">
-    <input type="text" name="name" placeholder="Nome" required><br>
-    <input type="email" name="email" placeholder="Email" required><br>
-    <input type="password" name="password" placeholder="Senha" required><br>
-    <button type="submit">Criar conta</button>
-  </form>
-  <a href="/">Já tem conta? Fazer login</a>
+  <div class="dashboard-container">
+    <h2>Bem-vindo, <%= user.name %>!</h2>
+
+    <div class="info-card">
+      <p><strong>📱 Sessão:</strong> <%= user.email.replace(/[@.]/g, "_") %></p>
+      <p><strong>Status:</strong>
+        <% if (status.status === "connected") { %>
+          <span class="status-badge connected">🟢 Conectado</span>
+        <% } else if (status.status === "connecting") { %>
+          <span class="status-badge connecting">⏳ Conectando</span>
+        <% } else { %>
+          <span class="status-badge disconnected">🔴 Desconectado</span>
+        <% } %>
+      </p>
+      <p><strong>Última mensagem:</strong> <%= status.lastMessage %></p>
+    </div>
+
+    <% if (qr) { %>
+      <h3 style="text-align: center;">Escaneie o QR Code para conectar</h3>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?data=<%= qr %>&size=300x300" alt="QR Code WhatsApp" />
+    <% } else { %>
+      <p style="text-align: center; margin-top: 30px;">✅ Você já está conectado ao WhatsApp!</p>
+    <% } %>
+
+    <form action="/dashboard/aquecedor" method="POST">
+      <button type="submit">🔥 Ativar Aquecimento</button>
+    </form>
+
+    <div class="logout-link">
+      <a href="/logout">Sair</a>
+    </div>
+  </div>
 </body>
 </html>
