@@ -114,9 +114,43 @@ router.post("/debug", (req, res) => {
   res.send("Debug OK!");
 });
 
-// Futuro: botão de aquecimento
+// ✅ Botão do aquecedor
 router.post("/aquecedor", (req, res) => {
   res.redirect("/dashboard");
+});
+
+// ✅ Botão de DESCONEXÃO do WhatsApp
+router.post("/desconectar", (req, res) => {
+  try {
+    const email = req.session.user?.email;
+    if (!email) return res.status(401).send("Usuário não autenticado.");
+
+    const sessionId = email.replace(/[@.]/g, "_");
+    const sessionDir = path.join(__dirname, "..", "sessions", sessionId);
+    const qrFilePath = path.join(__dirname, "..", "qr", `${sessionId}.txt`);
+    const statusPath = path.join(__dirname, "..", "status.json");
+
+    // Deleta pasta da sessão e QR se existirem
+    if (fs.existsSync(sessionDir)) fs.rmSync(sessionDir, { recursive: true, force: true });
+    if (fs.existsSync(qrFilePath)) fs.unlinkSync(qrFilePath);
+
+    // Atualiza status para desconectado
+    let statusData = fs.existsSync(statusPath)
+      ? JSON.parse(fs.readFileSync(statusPath))
+      : {};
+    statusData[sessionId] = {
+      status: "desconectado",
+      lastMessage: "-"
+    };
+    fs.writeFileSync(statusPath, JSON.stringify(statusData, null, 2));
+
+    console.log("🔌 WhatsApp desconectado:", sessionId);
+
+    res.redirect("/dashboard");
+  } catch (err) {
+    console.error("❌ Erro ao desconectar:", err);
+    res.status(500).send("Erro ao desconectar.");
+  }
 });
 
 module.exports = router;
