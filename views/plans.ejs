@@ -1,12 +1,19 @@
 <%- include('partials/header', { title: 'Planos e Preços' }) %>
-<main class="card">
-  <img src="https://i.ibb.co/3ydtSJNq/logo.png" alt="Logo SharkBotzap" class="logo">
-  <h2>Planos e Preços</h2>
-  <ul style="text-align: left; padding-left: 1rem;">
-    <li><strong>🟢 Grátis:</strong> 1 chip – <strong>R$ 0,00</strong></li>
-    <li><strong>🔵 Básico:</strong> até 3 chips – <strong>R$ 29,90/mês</strong></li>
-    <li><strong>🟠 Avançado:</strong> até 10 chips – <strong>R$ 89,90/mês</strong></li>
-    <li><strong>🔴 Profissional:</strong> ilimitado – <strong>R$ 199,90/mês</strong></li>
-  </ul>
-</main>
-<%- include('partials/footer') %>
+<%- include('partials/navbar') %>
+
+<body style="background: linear-gradient(135deg, #2563eb, #3b82f6); min-height: 100vh; padding: 2rem;">
+
+  <main class="card">
+    <img src="https://i.ibb.co/3ydtSJNq/logo.png" alt="Logo SharkBotzap" class="logo">
+    <h2>Planos e Preços</h2>
+    <ul style="text-align: left; padding-left: 1rem;">
+      <li><strong>🟢 Grátis:</strong> 1 chip – <strong>R$ 0,00</strong></li>
+      <li><strong>🔵 Básico:</strong> até 3 chips – <strong>R$ 29,90/mês</strong></li>
+      <li><strong>🟠 Avançado:</strong> até 10 chips – <strong>R$ 89,90/mês</strong></li>
+      <li><strong>🔴 Profissional:</strong> ilimitado – <strong>R$ 199,90/mês</strong></li>
+    </ul>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>
