@@ -1,1 +1,7 @@
-
+<%- include('partials/header', { title: 'Perfil' }) %>
+<main class="card">
+  <h2>Perfil do Usuário</h2>
+  <p><strong>Nome:</strong> <%= user.name %></p>
+  <p><strong>Email:</strong> <%= user.email %></p>
+</main>
+<%- include('partials/footer') %>
