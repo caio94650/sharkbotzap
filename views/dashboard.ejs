@@ -80,22 +80,23 @@
 
     <% if (qr) { %>
       <div class="qr-box"><%= qr %></div>
+      <form action="/dashboard/aquecedor" method="POST">
+        <button type="submit">Iniciar Aquecedor</button>
+      </form>
+    <% } else if (status.status === "conectado") { %>
+      <p style="color: green;">✅ Seu WhatsApp já está conectado!</p>
+      <form action="/dashboard/aquecedor" method="POST">
+        <button type="submit">Iniciar Aquecedor</button>
+      </form>
     <% } else { %>
-      <p>QR Code ainda não gerado ou sessão já conectada.</p>
+      <p style="color: gray;">📲 Aguardando conexão via QR Code...</p>
+      <p>Conecte-se ao WhatsApp para iniciar o aquecedor.</p>
     <% } %>
 
     <div class="status-box">
       <strong>Status:</strong> <%= status.status %><br>
       <strong>Última Mensagem:</strong> <%= status.lastMessage %>
     </div>
-
-    <% if (status.status === 'conectado') { %>
-      <form action="/dashboard/aquecedor" method="POST">
-        <button type="submit">Iniciar Aquecedor</button>
-      </form>
-    <% } else { %>
-      <p style="color: #999; margin-top: 20px;">Conecte-se ao WhatsApp para iniciar o aquecedor.</p>
-    <% } %>
 
     <a class="logout" href="/logout">Sair</a>
   </div>
