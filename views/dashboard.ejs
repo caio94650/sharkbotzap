@@ -3,152 +3,128 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SharkBotzap</title>
-  <link rel="icon" href="/favicon.ico" />
+  <title>Painel - SharkBotzap</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #f4f6f8;
+      font-family: 'Inter', sans-serif;
+      background-color: #f3f4f6;
       color: #333;
     }
-
     header {
-      background: #1f6feb;
-      color: #fff;
-      padding: 20px;
+      background-color: #2563eb;
+      color: white;
+      padding: 1rem;
       text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
-
+    header img {
+      height: 40px;
+      vertical-align: middle;
+    }
     main {
-      max-width: 500px;
-      margin: 40px auto;
-      background: #fff;
-      padding: 30px 25px;
+      max-width: 700px;
+      margin: 2rem auto;
+      background-color: #fff;
       border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-
-    .user-info {
-      margin-bottom: 25px;
+    h2 {
+      margin-top: 0;
+      color: #111827;
     }
-
-    .user-info strong {
-      color: #000;
+    .info {
+      margin-bottom: 1rem;
     }
-
-    .status-box {
-      padding: 12px;
-      border-radius: 6px;
+    .status {
+      padding: 1rem;
+      border-radius: 8px;
       font-weight: bold;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      margin-bottom: 1rem;
     }
-
-    .status-box.conectado {
-      background: #d1fae5;
+    .conectado {
+      background-color: #d1fae5;
       color: #065f46;
     }
-
-    .status-box.desconhecido {
-      background: #fee2e2;
+    .desconectado {
+      background-color: #fee2e2;
       color: #991b1b;
     }
-
-    .qr-container {
+    .qr {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 2rem;
     }
-
-    .qr-container img {
-      width: 220px;
-      border-radius: 8px;
-      border: 1px solid #ddd;
+    .qr img {
+      max-width: 100%;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
     }
-
     .btn {
       display: block;
       width: 100%;
-      margin: 10px 0;
-      padding: 12px;
-      background: #1f6feb;
+      text-align: center;
+      padding: 0.75rem;
+      background-color: #2563eb;
       color: white;
+      text-decoration: none;
       border: none;
       border-radius: 6px;
-      font-size: 16px;
+      font-size: 1rem;
+      margin-top: 1rem;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: background 0.2s ease-in-out;
     }
-
     .btn:hover {
-      background: #0f4dc5;
+      background-color: #1d4ed8;
     }
-
-    .info {
-      font-size: 14px;
+    footer {
       text-align: center;
-      color: #555;
-      margin-top: 25px;
-    }
-
-    @media (max-width: 500px) {
-      main {
-        margin: 20px;
-        padding: 20px;
-      }
-
-      header {
-        font-size: 20px;
-      }
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin-top: 3rem;
     }
   </style>
 </head>
 <body>
-  <header>SharkBotzap</header>
-
+  <header>
+    <h1>SharkBotzap</h1>
+  </header>
   <main>
-    <div class="user-info">
-      <p><strong>Bem-vindo,</strong> <%= user.name %></p>
+    <div class="info">
+      <h2>Bem-vindo, <%= user.name %></h2>
       <p>Email: <strong><%= user.email %></strong></p>
     </div>
 
-    <div class="status-box <%= status.status === 'conectado' ? 'conectado' : 'desconhecido' %>">
-      <%= status.status === 'conectado' ? '🟢 Conectado ao WhatsApp' : '🔴 Desconectado' %>
+    <div class="status <%= status.status === 'conectado' ? 'conectado' : 'desconectado' %>">
+      Status: <%= status.status %>
     </div>
 
     <% if (qr) { %>
-      <div class="qr-container">
+      <div class="qr">
         <p>Escaneie o QR Code abaixo com o WhatsApp:</p>
-        <img src="<%= qr %>" alt="QR Code do WhatsApp" />
+        <img src="<%= qr %>" alt="QR Code WhatsApp">
       </div>
     <% } else if (status.status !== 'conectado') { %>
-      <p style="text-align: center;">Nenhum QR Code disponível. Clique no botão abaixo para conectar.</p>
+      <p style="text-align:center;">Nenhum QR Code disponível. Clique no botão abaixo para conectar.</p>
     <% } %>
 
     <% if (status.status !== 'conectado') { %>
       <form action="/dashboard/conectar" method="POST">
-        <button class="btn">Conectar WhatsApp</button>
+        <button class="btn" type="submit">Conectar WhatsApp</button>
       </form>
+    <% } else { %>
+      <p style="text-align:center;">✅ Dispositivo já está conectado ao WhatsApp.</p>
     <% } %>
 
     <form action="/dashboard/aquecedor" method="POST">
-      <button class="btn">Iniciar Aquecedor</button>
+      <button class="btn" type="submit">Iniciar Aquecedor</button>
     </form>
-
-    <form action="/dashboard/debug" method="POST">
-      <button class="btn">Testar POST (Debug)</button>
-    </form>
-
-    <div class="info">Painel do cliente SharkBotzap • Versão beta</div>
   </main>
+  <footer>
+    &copy; <%= new Date().getFullYear() %> SharkBotzap. Todos os direitos reservados.
+  </footer>
 </body>
 </html>
