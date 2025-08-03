@@ -1,53 +1,48 @@
 <%- include('partials/header', { title: 'Dashboard - SharkBotzap' }) %>
 <%- include('partials/navbar') %>
 
-<div class="container">
-  <div class="card">
-    <img src="https://i.ibb.co/3ydtSJNq/logo.png" alt="Logo SharkBotzap" class="logo">
+<div style="display: flex; justify-content: center; align-items: center; min-height: 90vh; background: linear-gradient(to bottom right, #2563eb, #3b82f6); padding: 2rem;">
+  <div style="background: white; padding: 2rem; border-radius: 16px; max-width: 420px; width: 100%; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; font-family: 'Inter', sans-serif;">
+    
+    <img src="https://i.ibb.co/3ydtSJNq/logo.png" alt="Logo SharkBotzap" style="width: 100px; margin-bottom: 1rem;">
+
     <h2>Olá, <%= user.name %> 👋</h2>
-
-    <div class="info">
-      <p><strong>Email:</strong> <%= user.email %></p>
-    </div>
-
-    <div class="status <%= status.status === 'conectado' ? 'conectado' : 'desconectado' %>">
-      Status do WhatsApp: <%= status.status %>
-    </div>
+    <p><strong>Email:</strong> <%= user.email %></p>
+    <p style="color: #ef4444; font-weight: bold;">Status do WhatsApp: <%= status.status %></p>
 
     <% if (qr) { %>
-      <div class="qr">
-        <p>Escaneie o QR Code abaixo com seu WhatsApp:</p>
-        <img src="<%= qr %>" alt="QR Code WhatsApp">
-      </div>
+      <p style="margin-top: 1rem;">Escaneie o QR Code abaixo com seu WhatsApp:</p>
+      <img src="<%= qr %>" alt="QR Code WhatsApp" style="width: 200px; margin: 1rem auto;">
     <% } else if (status.status !== 'conectado') { %>
-      <p style="text-align:center;">Nenhum QR Code disponível no momento.</p>
+      <p style="margin-top: 1rem;">Nenhum QR Code disponível no momento.</p>
     <% } %>
 
     <% if (status.status !== 'conectado') { %>
       <form action="/dashboard/conectar" method="POST">
-        <button class="btn" type="submit">Conectar WhatsApp</button>
+        <button type="submit" style="width: 100%; margin-top: 1rem; padding: 0.7rem; border: none; border-radius: 8px; background-color: #3b82f6; color: white; font-weight: 600;">Conectar WhatsApp</button>
       </form>
     <% } else { %>
-      <p style="text-align:center;">✅ Dispositivo já conectado!</p>
+      <p style="margin-top: 1rem; color: green;">✅ Dispositivo já conectado!</p>
     <% } %>
 
     <form action="/dashboard/aquecedor" method="POST">
-      <button class="btn" type="submit">Iniciar Aquecedor</button>
+      <button type="submit" style="width: 100%; margin-top: 1rem; padding: 0.7rem; border: none; border-radius: 8px; background-color: #2563eb; color: white; font-weight: 600;">Iniciar Aquecedor</button>
     </form>
 
     <form action="/dashboard/desconectar" method="POST">
-      <button class="btn-red" type="submit">Desconectar WhatsApp</button>
+      <button type="submit" style="width: 100%; margin-top: 1rem; padding: 0.7rem; border: none; border-radius: 8px; background-color: #ef4444; color: white; font-weight: 600;">Desconectar WhatsApp</button>
     </form>
 
-    <div class="instrucoes">
+    <div style="background-color: #f9fafb; margin-top: 2rem; padding: 1rem; border-radius: 8px; text-align: left;">
       <h3>📌 Instruções</h3>
-      <ul>
+      <ul style="padding-left: 1rem; font-size: 0.95rem;">
         <li>1. Clique em <strong>Conectar WhatsApp</strong> e escaneie o QR Code</li>
         <li>2. Após conectar, clique em "Iniciar Aquecedor"</li>
         <li>3. Para reiniciar, use o botão "Desconectar"</li>
       </ul>
     </div>
 
-    <%- include('partials/footer') %>
   </div>
 </div>
+
+<%- include('partials/footer') %>
